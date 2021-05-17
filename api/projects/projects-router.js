@@ -8,6 +8,7 @@ router.get("/", async (req, res, next) => {
   try {
     res.json(await Project.get());
   } catch (err) {
+      res.status(404);
     next(new ExpressError(err, 500));
   }
 });
