@@ -41,7 +41,7 @@ router.post("/", async (req, res, next) => {
     const project = await Project.insert(req.body);
     res.status(201).json(project);
   } catch (err) {
-    next(new ExpressError(err, 500));
+    next(new ExpressError(err, 400));
   }
 });
 
@@ -51,16 +51,13 @@ router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   if (!changes.name || !changes.description || changes.completed) {
-    res.status(400).json({
-      message:
-        "Please provide a description and description, or whether the action is completed",
-    });
+    res.status(400)
   } else {
     await Project.update(id, changes).then((updatedProject) => {
       if (updatedProject) {
         res.status(200).json(updatedProject);
       } else {
-        next(new ExpressError(err, 500));
+        next(new ExpressError(err, 400));
       }
     });
     next(new ExpressError(err, 500));
