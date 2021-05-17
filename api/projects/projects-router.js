@@ -66,7 +66,7 @@ router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   if (!changes.name || !changes.description || changes.completed) {
-    res.status(404).json({
+    res.status(400).json({
       message:
         "Please provide a description and description, or whether the action is completed",
     });
