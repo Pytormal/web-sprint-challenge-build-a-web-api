@@ -1,6 +1,7 @@
 // Write your "projects" router here!
 const router = require("express").Router();
 const Project = require("./projects-model.js");
+const Action = require("../actions/actions-model");
 const ExpressError = require("../expressError");
 
 //  //  // Get all Projects
@@ -18,8 +19,14 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const project = await Project.get(id);
-    res.json(project);
+      const project = await Project.get(id);
+      if (project) {
+          res.json(project);  
+      } else {
+           res.status(404).json({
+             message: "specified id does not exist or is found",
+           });
+        }
   } catch (err) {
     next(new ExpressError(err, 500));
   }
@@ -28,8 +35,15 @@ router.get("/:id", async (req, res, next) => {
 router.get("/:id/actions", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const project = await Project.get(id);
-    res.json(project);
+      const action = await Action.get(id);
+        if (action) {
+          res.json(action);
+        } else {
+          res.status(404).json({
+            message: "specified id does not exist or is found",
+          });
+        }
+    res.json(action);
   } catch (err) {
     next(new ExpressError(err, 500));
   }
@@ -52,7 +66,7 @@ router.put("/:id", async (req, res, next) => {
   const { id } = req.params;
 
   if (!changes.name || !changes.description || changes.completed) {
-    res.status(400).json({
+    res.status(404).json({
       message:
         "Please provide a description and description, or whether the action is completed",
     });
