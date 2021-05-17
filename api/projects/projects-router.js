@@ -15,7 +15,6 @@ router.get("/", async (req, res, next) => {
 });
 
 //  //  // Get by id
-//  //  // ▼ Both does the same thing at the moment ▼
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -32,6 +31,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+//  //  // Attempted
 router.get("/:id/actions", async (req, res, next) => {
   const { actions } = req.params;
   try {
@@ -48,7 +48,7 @@ router.get("/:id/actions", async (req, res, next) => {
     next(new ExpressError(err, 500));
   }
 });
-//  //  // ▲ Both does the same thing at the moment ▲
+
 
 //  //  // Insert new project
 router.post("/", async (req, res, next) => {
