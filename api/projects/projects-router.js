@@ -9,7 +9,7 @@ router.get("/", async (req, res, next) => {
   try {
     res.json(await Project.get());
   } catch (err) {
-      res.status(404);
+    res.status(404);
     next(new ExpressError(err, 500));
   }
 });
@@ -19,30 +19,30 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-      const project = await Project.get(id);
-      if (project) {
-          res.json(project);  
-      } else {
-           res.status(404).json({
-             message: "specified id does not exist or is found",
-           });
-        }
+    const project = await Project.get(id);
+    if (project) {
+      res.json(project);
+    } else {
+      res.status(404).json({
+        message: "specified id does not exist or is found",
+      });
+    }
   } catch (err) {
     next(new ExpressError(err, 500));
   }
 });
 
 router.get("/:id/actions", async (req, res, next) => {
-  const { id } = req.params;
+  const { actions } = req.params;
   try {
-      const action = await Action.get(id);
-        if (action) {
-          res.json(action);
-        } else {
-          res.status(404).json({
-            message: "specified id does not exist or is found",
-          });
-        }
+    const action = await Project.get(actions);
+    if (action) {
+      res.json(action);
+    } else {
+      res.status(404).json({
+        message: "specified id does not exist or is found",
+      });
+    }
     res.json(action);
   } catch (err) {
     next(new ExpressError(err, 500));
